@@ -1,0 +1,12 @@
+Package: com.supermamon.oldpackage
+Version: 1.0.0-1
+Section: Tweaks
+Maintainer: Reposi3 <at.supermamon@gmail.com>
+Author: Reposi3 <at.supermamon@gmail.com>
+Architecture: iphoneos-arm
+Filename: ./debs/com.reposi3.oldpackage-1.0.0-1.deb
+Size: 754
+MD5sum: eb9ac8cd0ccaf483f1a960f2165bc1a8
+Description: This is an old package. Requires iOS 7 and below.
+Name: Old Package
+Depiction: https://supermamon.github.io/reposi3/depictions/?p=com.supermamon.oldpackage

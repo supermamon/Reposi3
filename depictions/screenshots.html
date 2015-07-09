@@ -1,0 +1,135 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Screenshots</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ 
+  <script type="text/javascript" src="js/jquery.querystring.js"></script>
+  <script type="text/javascript" src="js/data-loader-engine.js"></script>
+  <script type="text/javascript" src="js/ios_version_check.js"></script>
+  <style>
+	@media (max-width: 767px) {
+		body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
+	}  
+  </style>
+  <script type="text/javascript">
+  
+	bundleid = $.QueryString['p'];	
+
+    var contentBlocks = 	{
+        "#screenshotsList"	: 
+			{"type":"custom"  
+				,"source" :"package>screenshots>screenshot"
+				,"render" : function(element,source){
+				console.log($(source).size());
+					if ($(source).size()==0) {
+						$(element).append( $("<div class='alert alert-danger'>The aren't any screenshots for this package</div>") ); 
+						return;
+					}
+					$.each(source, function(index,data) {
+						var th = $("<div class='thumbnail'>");
+						th.append($("<p>")
+							.text($(data).find('description').text())
+						)
+						th.append($("<img>")
+							.attr("src",bundleid+'/screenshots/'+$(data).find('image').text())
+						)
+						$(element).append(th);
+					});
+					
+				}
+			}
+	}
+    $( document ).ready(function() {
+        $.ajax({
+            type    : "GET",
+            dataType: "xml",
+            url     : (bundleid+"/info.xml"),
+            success : function(xml){
+				document.title = $(xml).find("package>name").text();
+            	data_loader_engine(contentBlocks,xml)
+            },
+			cache   : false,
+            error: function() {
+                $("#packageError").show();
+				$("#packageInformation").hide();
+            }
+        }); //ajax
+		
+    }); // ready
+  </script>
+</head>
+<body>
+<br />
+
+<div id="packageInformation">
+	<div class="container">
+		<h5>SCREENSHOTS</h5>
+		<ul id="screenshotsList" class="list-group">
+		</ul>
+	</div>
+</div>
+<div id="packageError" style="display:none">
+	<div class="container">
+	  <div class="alert alert-danger">
+		<strong>Oh snap!</strong> The package you are tying to view is not hosted on this repository. 
+	  </div>
+	</div>
+</div>
+<!-- REPO FOOTER ----------------------------------------------------------- -->
+<script type="text/javascript">
+    var repoContents = 	{
+		"#repoFooterLinks" : 
+			{"type":"custom"
+				,"source":"repo>footerlinks>link"
+				,"render":function(element,source) {
+					$.each(source, function(index,data) {
+						var p = $("<li class='list-group-item'>");
+						var a = $("<a class='btn btn-link'>");
+						a.attr("href",$(data).find('url').text());
+						if ($(data).find('iconclass')) {
+							var i =  $("<span>")
+							i.attr("class",$(data).find('iconclass').text());
+							console.log(i);
+							$(a).append(i);
+						} 
+						$(a).append(' '+$(data).find('name').text());
+						$(p).append(a)
+						$(element).append(p);
+					}); //each
+				} //render
+			}
+	}
+    $( document ).ready(function() {
+        $.ajax({type: "GET", dataType: "xml",url : ("../repo.xml"),cache: false,
+            success : function(xml){
+				data_loader_engine(repoContents,xml);
+				if (navigator.userAgent.search(/Cydia/) != -1) {
+					$("a").each(function() {
+						console.log($(this).text());
+						$(this).attr("target","_blank");
+					});
+				}
+			},
+            error: function() {$("#contactInfo").hide()}
+        }); //ajax
+		
+		
+    }); // ready
+
+</script>
+
+<div id="contactInfo">
+	<div class="container">
+		<h5>CONTACT</h5>
+		<ul class="list-group" id="repoFooterLinks">
+		</ul>
+	</div>
+</div>
+<!-- REPO FOOTER ENDS ------------------------------------------------------ -->
+
+</body>
+</html>
