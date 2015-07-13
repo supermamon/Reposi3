@@ -12,24 +12,24 @@
   <style>
 	@media (max-width: 767px) {
 		body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
-	}  
+	}
 	.jumbotron-bg {
 		background: green
 	}
   </style>
   <script type="text/javascript">
-  
-	bundleid = $.QueryString['p'];	
+
+	bundleid = $.QueryString['p'];
 
     var contentBlocks = 	{
     	"#packageName" :
 			{"type":"text","source":"package>name"}
-		,"#packageHeader" : 
+		,"#packageHeader" :
 			{"type":"custom"
 				,"source":"package>name"
 				,"render":function(element,source){
-					if (navigator.userAgent.search(/Cydia/) != -1) {
-						$(element).hide();
+					if (navigator.userAgent.search(/Cydia/) == -1) {
+						$(element).show();
 					}
 				}
 			}
@@ -51,14 +51,14 @@
 					if(res==0) {$(element).hide()}
 				}
 			}
-        ,"#descriptionList"	: 
-			{"type":"list"  
+        ,"#descriptionList"	:
+			{"type":"list"
 				,"source" :"package>descriptionlist>description"
 				,"paragraphElement"	: "<li class='list-group-item'>"
 				,"emptyListCallback":function(e){$("#descriptionPanel").hide()}
 			}
-        ,"#screenshotsLink"	: 
-			{"type":"custom"  
+        ,"#screenshotsLink"	:
+			{"type":"custom"
 				,"source" :"package>screenshots>screenshot"
 				,"render":function(element, source){
 					$("#screenshotsLink").remove();
@@ -70,20 +70,20 @@
 						$("<li class='list-group-item'>").append(
 							$("<a>")
 								.attr("href","screenshots.html?p="+bundleid)
-								.text("Screenshots")									
+								.text("Screenshots")
 						)
 					);
 				}
 			}
 		,"#versionBadge" : {"type":"text","source":"package>version"}
-        ,"#changesList"	: 
-			{"type":"list"  
+        ,"#changesList"	:
+			{"type":"list"
 				,"source" :"package>changelog>change"
 				,"reverseRender"    : true
 				,"paragraphElement"	: "<li class='list-group-item'>"
 				,"emptyListCallback":function(e){$("#changesList").hide()}
 			}
-		,"#changelogLink" : 
+		,"#changelogLink" :
 			{"type":"link"
 				,"text":"Full Changelog"
 				,"url":"changelog.html"
@@ -92,23 +92,23 @@
 				]
 			}
 		,"#dependencyList" :
-			{"type":"list"  
+			{"type":"list"
 				,"source" :"package>dependencies>package"
 				,"paragraphElement"	: "<li class='list-group-item'>"
 				,"emptyListCallback":function(e){$("#dependenciesContainer").remove()}
 			}
 		,"#externalLinksList" :
-			{"type":"custom"  
+			{"type":"custom"
 				,"source" :"package>links>link"
 				,"paragraphElement"	: "<li class='list-group-item'>"
 				,"render":function(element,source){
 					if ($(source).size()==0){
 						$('#externalLinksContainer').remove()
 					}
-					
+
 					$.each(source, function(index,data){
 						var p = $("<li class='list-group-item'>");
-						$(p).append( 
+						$(p).append(
 							$("<a>")
 							.attr("href",$(data).find('url').text())
 							.text($(data).find('name').text())
@@ -126,7 +126,7 @@
             success : function(xml){
 				document.title = $(xml).find("package>name").text();
             	data_loader_engine(contentBlocks,xml)
-				
+
             },
 			cache   : false,
             error: function() {
@@ -134,7 +134,7 @@
 				$("#packageInformation").hide();
             }
         }); //ajax
-		
+
     }); // ready
   </script>
 </head>
@@ -143,7 +143,7 @@
 
 <div id="packageInformation">
 
-	<div id="packageHeader" class="container">
+	<div id="packageHeader" class="container" style="hide">
 		<div class="jumbotron">
 			<h1 id="packageName"></h1>
 			<p>brought to you by Reposi3</p>
@@ -160,7 +160,7 @@
 			<li id="screenshotsLink" />
 		</ul>
 	</div>
-	
+
 	<div class="container">
 		<h5>IN THIS VERSION <span id="versionBadge" class="badge" /></h5>
 		<ul id="changesList" class="list-group">
@@ -172,25 +172,34 @@
 		<ul id="dependencyList" class="list-group">
 		</ul>
 	</div>
-	
+
 	<div class="container" id="externalLinksContainer">
 		<h5>LINKS</h5>
 		<ul id="externalLinksList" class="list-group">
 		</ul>
 	</div>
-	
+
 </div>
 <div id="packageError" style="display:none">
 	<div class="container">
 	  <div class="alert alert-danger">
-		<strong>Oh snap!</strong> The package you are tying to view is not hosted on this repository. 
+		<strong>Oh snap!</strong> The package you are tying to view is not hosted on this repository.
 	  </div>
 	</div>
 </div>
 
 <script type="text/javascript">
+   function setAnchorTargets() {
+     // if on Cydia, set link targets to _blank
+     if (navigator.userAgent.search(/Cydia/) != -1) {
+       $("a").each(function() {
+         $(this).attr("target","_blank");
+       });
+     }
+   }
+
     var repoContents = 	{
-		"#repoFooterLinks" : 
+		"#repoFooterLinks" :
 			{"type":"custom"
 				,"source":"repo>footerlinks>link"
 				,"render":function(element,source) {
@@ -203,7 +212,7 @@
 							i.attr("class",$(data).find('iconclass').text());
 							console.log(i);
 							$(a).append(i);
-						} 
+						}
 						$(a).append(' '+$(data).find('name').text());
 						$(p).append(a)
 						$(element).append(p);
@@ -214,18 +223,16 @@
     $( document ).ready(function() {
         $.ajax({type: "GET", dataType: "xml",url : ("../repo.xml"),cache: false,
             success : function(xml){
-				data_loader_engine(repoContents,xml);
-				if (navigator.userAgent.search(/Cydia/) != -1) {
-					$("a").each(function() {
-						console.log($(this).text());
-						$(this).attr("target","_blank");
-					});
-				}
-			},
-            error: function() {$("#contactInfo").hide()}
+				      data_loader_engine(repoContents,xml);
+              setAnchorTargets();
+			      },
+            error: function() {
+              $("#contactInfo").hide();
+              setAnchorTargets();
+            }
         }); //ajax
-		
-		
+
+
     }); // ready
 
 </script>
