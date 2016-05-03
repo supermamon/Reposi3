@@ -1,0 +1,6 @@
+{
+  "packages" : [
+    "com.supermamon.newpackage",
+    "com.supermamon.oldpackage"
+  ]
+}
