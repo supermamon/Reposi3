@@ -1,6 +1,7 @@
 {
   "name"        : "Reposi3",
   "repo-url"    : "https://supermamon.github.io/Reposi3/",
+  "maintainer"  : "@supermamon",
   "footerlinks" : [
     {
       "name"  : "Follow me on Twitter",
@@ -9,7 +10,7 @@
     },
     {
       "name"  : "I want this depiction template",
-      "url"   : "https://github.com//supermamon//Reposi3",
+      "url"   : "https://github.com/supermamon//Reposi3",
       "icon"  : "glyphicon glyphicon-thumbs-up"
     }
   ]

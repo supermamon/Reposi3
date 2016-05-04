@@ -1,0 +1,31 @@
+{
+  "id"            : "com.supermamon.fullpackage",
+  "packagename"   : "Full Package",
+  "compatibility" : {
+    "firmware"    : {
+      "miniOS"    : "9.0"
+    }
+  },
+  "dependencies"  : [
+    "mobilesubstrate"
+  ],
+  "descriptions"  : [
+    "This is an package will full depictions.",
+    "It has more description lines."
+  ],
+  "changelog"     : {
+    "1.0.1" : [
+                "Bugfix for blah blah",
+                "Another fix for"
+              ],
+    "1.0.0" : [
+                "Initial Release"
+              ]
+  },
+  "screenshots"   : {
+    "1.0.0"       : [
+      {"image":"cydia.jpg", "description":"This is a description for screenshot 1. It's Cydia!"},
+      {"image":"cydia.jpg","description":"This is a description for screenshot 2. It's another Cydia!"}
+    ]
+  }
+}

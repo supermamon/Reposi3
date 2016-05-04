@@ -10,8 +10,8 @@
   <script type="text/javascript">
   var content = [
     {
-      'file-source' : 'repo-info.json',
-      'containers'  : {
+      'data-source' : 'repo-info.json',
+      'elements'  : {
         'title' : {'type':'text','source':'name'},
         '.reponame' : {'type':'text','source':'name'},
         '#cydia-repo-url' : {'type':'custom','source':'repo-url', render : function(e,src) {
@@ -21,8 +21,8 @@
       }
     },
     {
-      'file-source' : 'pkg-list.json',
-      'containers'  : {
+      'data-source' : 'pkg-list.json',
+      'elements'  : {
         '#packages' : {'type':'custom','source':'packages', render : function(e,src) {
           // i'm expecting an array
           $.each(src, function(idx,package) {
@@ -38,17 +38,8 @@
     } //content item
   ];
   $(document).ready(function(){
-    $.each(content, function(idx, webpart) {
-      console.log(webpart);
-      $.getJSON(webpart['file-source'], function(data) {
-        json_data_loader_engine(webpart['containers'], data);
-      })
-      .fail(function() {
-        console.log( "Unable to load "+webpart['file-source'] );
-      })
-      ;
-    });
-
+    var loader = new JSONContentLoader(content);
+    loader.render();
   }) //ready
   </script>
 </head>
