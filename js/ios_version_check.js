@@ -13,6 +13,7 @@ var VERSION_CHECK_UNSUPPORTED = "Only compatible with iOS %s to %s &#x1f61e;";
 function ios_version_check(minIOS,maxIOS,otherIOS,callBack) {
 	"use strict";
 
+	if (!minIOS) {minIOS = "1.0"}
 
 	function parseVersionString(version) {
 		var bits = version.split(".");

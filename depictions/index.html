@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery.querystring.js"></script>
-  <script type="text/javascript" src="js/data-loader-engine.js"></script>
-  <script type="text/javascript" src="../js/json-data-loader-engine.js"></script>
-  <script type="text/javascript" src="js/ios_version_check.js"></script>
+  <script type="text/javascript" src="../js/jquery.querystring.js"></script>
+  <script type="text/javascript" src="../js/ios_version_check.js"></script>
+  <script type="text/javascript" src="../js/json-renderer-1.0.0.js"></script>
   <style>
   @media (max-width: 767px) {
     body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
@@ -26,7 +25,6 @@
     {
       'data-source' : '../repo-info.json',
       'elements'  : {
-        '.maintainer'     : {'type':'text','source':'maintainer'},
         '#repoFooterLinks': {'type':'custom', "source":"footerlinks",
           "render" : function(element,source) {
             if ($(source).size() == 0) {$('#externalLinksContainer').hide()}
@@ -34,7 +32,7 @@
               var p = $("<li class='list-group-item'>");
               var a = $("<a class='btn btn-link'>")
                 .attr("href",data.url)
-                .attr("target",isCydia?"_blank":"self");
+                .attr("target",isCydia?"_blank":"_self");
               if (data.icon) {
                 $(a).append($("<span>").attr("class",data.icon));
               }
@@ -51,6 +49,7 @@
       'elements'  : {
         'title'           : {'type':'text','source':'packagename'},
         '.packagename'    : {'type':'text','source':'packagename'},
+        '.author'         : {'type':'text','source':'author'},
         '#packageHeader'  : {'type':'custom','source':'packagename',
                               'render' : function(e,s) {
                                 if (!isCydia) {$(e).show();}
@@ -75,7 +74,7 @@
                             'afterRender':function(e,data) {
                               var a = $('<A>')
                                 .attr('href','screenshots.html?p='+bundleid)
-                                .attr("target",isCydia?"_blank":"self")
+                                .attr("target",isCydia?"_blank":"_self")
                                 .text('Screenshots');
                               $(e).append($("<li class='list-group-item'>").append(a));
                             }
@@ -87,7 +86,7 @@
                             'afterRender':function(e,data) {
                               var a = $('<A>')
                                 .attr('href','changelog.html?p='+bundleid)
-                                .attr("target",isCydia?"_blank":"self")
+                                .attr("target",isCydia?"_blank":"_self")
                                 .text('Full ChangeLog');
                               $(e).append($("<li class='list-group-item'>").append(a));
                             }
@@ -103,14 +102,16 @@
       }// elements
     }
   ];
-
-  $( document ).ready(function() {
-    var loader = new JSONContentLoader(content, function(src) {
+  var writer = new JSONRenderer({
+    verbose : false,
+    contentDefinition : content,
+    onDataFileError : function(file) {
       $('#packageInformation').hide();
       $('#packageError').show();
-    });
-    loader.render();
-  }); // ready
+    }
+  });
+  writer.render();
+
   </script>
 </head>
 <body>
@@ -118,10 +119,10 @@
 
 <div id="packageInformation">
 
-  <div id="packageHeader" class="container" style="hide">
+  <div id="packageHeader" class="container" style="display:none">
     <div class="jumbotron">
       <h1 class="packagename"></h1>
-      <p>brought to you by <span class="maintainer"></span></p>
+      <p>by <span class="author"></span></p>
     </div>
   </div>
 

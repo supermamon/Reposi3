@@ -1,18 +1,25 @@
 var JSONContentLoader = function(contentInfo,onDataSourceFail) {
+  this.verbose = false;
   this.contentInfo = contentInfo;
   if (onDataSourceFail) {
       this.onDataSourceFail = onDataSourceFail;
   }
+}
 
+JSONContentLoader.prototype.log = function(msg) {
+  if (this.verbose) {
+    console.log(msg);
+  }
 }
 
 JSONContentLoader.prototype.runEngine = function(elements, data)
 {
+  var self = this;
   $.each(elements, function (element, sourceDef) {
 
-    console.log('Rendering '+element);
-    console.log('  .type='+sourceDef.type);
-    console.log('  .source='+sourceDef.source);
+    self.log('Rendering '+element);
+    self.log('  .type='+sourceDef.type);
+    self.log('  .source='+sourceDef.source);
 
     // go out if key element does not exits
     if (!($(element).length)) {return}
@@ -22,15 +29,15 @@ JSONContentLoader.prototype.runEngine = function(elements, data)
     }
 
     if (sourceDef.select) {
-      console.log('  .has select filter = '+sourceDef.select);
+      self.log('  .has select filter = '+sourceDef.select);
       switch (sourceDef.select) {
         case 'firstKey' :
           content = Object.keys(content)[0];
-          console.log('  newcontent = '+content);
+          self.log('  newcontent = '+content);
           break;
         case 'firstValue' :
           content = $(content)[0];
-          console.log('  newcontent = '+content);
+          self.log('  newcontent = '+content);
           break;
         default :
       }
@@ -38,7 +45,7 @@ JSONContentLoader.prototype.runEngine = function(elements, data)
 
     switch (sourceDef.type) {
       case 'text' :
-        console.log('  Setting text of '+element+' to '+content);
+        self.log('  Setting text of '+element+' to '+content);
         $(element).html(content);
         break;
       case 'list' :
@@ -61,38 +68,40 @@ JSONContentLoader.prototype.runEngine = function(elements, data)
         }
         break;
       case 'custom' :
-        console.log('  Calling render("'+element+'",('+data[sourceDef.source]+'))');
+        self.log('  Calling render("'+element+'",('+content+'))');
         sourceDef.render( element, content);
       default:
     } // switch
 
     if(sourceDef.afterRender) {
-      console.log('  Running afterRender');
+      self.log('  Running afterRender');
       sourceDef.afterRender(element, content);
     }
 
   });
 }
 JSONContentLoader.prototype.onDataSourceFail = function(src) {
-  console.log("onDataSourceFail triggered for "+src);
+  self.log("onDataSourceFail triggered for "+src);
+  return this
 }
+
 JSONContentLoader.prototype.render = function()
 {
-  var loader = this;
-  $.each(this.contentInfo, function(idx, webpart) {
-    console.log(webpart);
+  var self = this;
+  $.each(self.contentInfo, function(idx, webpart) {
+    self.log(webpart);
     if (webpart['data-source'] != '') {
       $.getJSON(webpart['data-source'], function(data) {
-        loader.runEngine(webpart['elements'], data);
+        self.runEngine(webpart['elements'], data);
       })
       .fail(function() {
-        console.log( "getJSON failed for "+webpart['data-source'] );
-        if (loader.onDataSourceFail) {
-          loader.onDataSourceFail(webpart['data-source']);
+        self.log( "getJSON failed for "+webpart['data-source'] );
+        if (self.onDataSourceFail) {
+          self.onDataSourceFail(webpart['data-source']);
         }
       });
     } else {
-      loader.runEngine(webpart['elements'], null);
+      self.runEngine(webpart['elements'], null);
     }
   });
 }

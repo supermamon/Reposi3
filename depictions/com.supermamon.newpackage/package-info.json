@@ -1,6 +1,7 @@
 {
   "id"            : "com.supermamon.fullpackage",
   "packagename"   : "Full Package",
+  "author"        : "@supermamon",
   "compatibility" : {
     "firmware"    : {
       "miniOS"    : "9.0"
@@ -25,7 +26,7 @@
   "screenshots"   : {
     "1.0.0"       : [
       {"image":"cydia.jpg", "description":"This is a description for screenshot 1. It's Cydia!"},
-      {"image":"cydia.jpg","description":"This is a description for screenshot 2. It's another Cydia!"}
+      {"image":"shot1.jpg","description":"Another screenshot"}
     ]
   }
 }

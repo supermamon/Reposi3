@@ -1,20 +1,21 @@
 # Reposi3
 A Cydia repository template. This template contains sample on how you can easily make depiction pages without replicating your html pages. The pages are styled using [Bootsrap](http://getbootstrap.com/) which is really easy to use. You can see how it looks like by visiting [this sample repo](https://supermamon.github.io/Reposi3/) on your desktop or mobile phone.
 
-Most data for this repo is stored on XML files and are loaded on the depiction page dynamically. See the guide below on how to set it up. Note that this guide doesn't cover creating .deb files but will briefly cover assiging depictions.
+Data for this repo is stored on JSON files (XML for previous version) and are loaded on the depiction page dynamically. See the guide below on how to set it up. Note that this guide doesn't cover creating .deb files but will briefly cover assigning depictions.
 
 ## How to install this template
 
 ### 1. Download
 The latest release will always be [here](https://github.com/supermamon/Reposi3/archive/master.zip).
+XML-based release can be found at [here](https://github.com/supermamon/Reposi3/archive/5bd586b197fce985f179ab0e3b7b06eb494aada7.zip).
 
 ### 2. Extract
 Extract the contents into a subfolder on your website. If you're using [Github Pages](https://pages.github.com/), it should be under `username.github.io/repo`. You can change `repo` to anything you want like `cydia` for example. So your repo url would be `https://username.github.io/cydia`. For this guide we'll assume that you are using github your repo url is `https://username.github.io/repo`.
 
 #### 3. Personalize
 Edit `Release` file. Modify the items pointed by `<--`
-    
-    Origin: Reposi3  <-- 
+
+    Origin: Reposi3  <--
     Label: Reposi3   <--
     Suite: stable
     Version: 1.0
@@ -32,7 +33,7 @@ At this point your repo is basically ready to be added into Cydia. You can also 
 #### 1. A basic depiction page
 Let's start with a simple one. First, of course, add your `.deb` files into the `debs` folder. Then, inside the `depictions` folder, duplicate the folder `com.supermamon.oldpackage`. You will see 2 xml files -- `info.xml` and `changelog.xml`. Edit the 2 files and put in the information regarding you package. The tags are pretty much self-explanatory. Contact [@reposi3](https://twitter.com/reposi3) or [@supermamon](https://twitter.com/supermamon) for questions.
 
-`info.xml`. 
+`info.xml`.
 ```xml
 <package>
 	<id>com.supermamon.oldpackage</id>

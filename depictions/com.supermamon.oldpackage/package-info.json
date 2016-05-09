@@ -1,9 +1,10 @@
 {
   "id"            : "com.supermamon.oldpackage",
   "packagename"   : "Old Package",
+  "author"        : "@supermamon",
   "compatibility" : {
     "firmware"    : {
-      "miniOS"    : "7.0"
+      "maxiOS"    : "7.0"
     }
   },
   "descriptions"  : [

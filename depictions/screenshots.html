@@ -1,135 +1,115 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Screenshots</title>
+  <title>/supermamon/</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
- 
-  <script type="text/javascript" src="js/jquery.querystring.js"></script>
-  <script type="text/javascript" src="js/data-loader-engine.js"></script>
-  <script type="text/javascript" src="js/ios_version_check.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.querystring.js"></script>
+  <script type="text/javascript" src="../js/ios_version_check.js"></script>
+  <script type="text/javascript" src="../js/json-renderer-1.0.0.js"></script>
   <style>
-	@media (max-width: 767px) {
-		body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
-	}  
+  @media (max-width: 767px) {
+    body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
+  }
   </style>
   <script type="text/javascript">
-  
-	bundleid = $.QueryString['p'];	
+  var bundleid = $.QueryString['p'];
+  var isCydia = (navigator.userAgent.search(/Cydia/) != -1);
 
-    var contentBlocks = 	{
-        "#screenshotsList"	: 
-			{"type":"custom"  
-				,"source" :"package>screenshots>screenshot"
-				,"render" : function(element,source){
-				console.log($(source).size());
-					if ($(source).size()==0) {
-						$(element).append( $("<div class='alert alert-danger'>The aren't any screenshots for this package</div>") ); 
-						return;
-					}
-					$.each(source, function(index,data) {
-						var th = $("<div class='thumbnail'>");
-						th.append($("<p>")
-							.text($(data).find('description').text())
-						)
-						th.append($("<img>")
-							.attr("src",bundleid+'/screenshots/'+$(data).find('image').text())
-						)
-						$(element).append(th);
-					});
-					
-				}
-			}
-	}
-    $( document ).ready(function() {
-        $.ajax({
-            type    : "GET",
-            dataType: "xml",
-            url     : (bundleid+"/info.xml"),
-            success : function(xml){
-				document.title = $(xml).find("package>name").text();
-            	data_loader_engine(contentBlocks,xml)
-            },
-			cache   : false,
-            error: function() {
-                $("#packageError").show();
-				$("#packageInformation").hide();
-            }
-        }); //ajax
-		
-    }); // ready
-  </script>
+  var content = [
+    {
+      'data-source' : '../repo-info.json',
+      'elements'  : {
+        '#repoFooterLinks': {'type':'custom', "source":"footerlinks",
+          "render" : function(element,source) {
+            if ($(source).size() == 0) {$('#externalLinksContainer').hide()}
+            $.each(source, function(index,data) {
+              var p = $("<li class='list-group-item'>");
+              var a = $("<a class='btn btn-link'>")
+                .attr("href",data.url)
+                .attr("target",isCydia?"_blank":"self");
+              if (data.icon) {
+                $(a).append($("<span>").attr("class",data.icon));
+              }
+              $(a).append(' '+data.name);
+              $(p).append(a)
+              $(element).append(p);
+            }); // each
+          } // render
+        } //#repoFooterLinks
+      } //elements
+    },
+    {
+      'data-source' : (bundleid+'/package-info.json'),
+      'elements'  : {
+        'title'           : {'type':'text','source':'packagename'},
+        '#screenshotsList': {'type':'custom','source':'screenshots','select':'firstValue',
+                            'listElement':"<li class='list-group-item'>",
+                            'render' : function(element, source) {
+                              if ((!source)) {
+                                $('#packageInformation').hide();
+                                $('#packageError').show();
+                              }
+                              var key = Object.keys(source)[0];
+                              source = source[key];
+                              if ($(source).size() == 0) {
+                                $('#packageInformation').hide();
+                                $('#packageError').show();
+                              }
+                              $.each(source, function(index,data) {
+                                var th = $("<div class='thumbnail'>");
+                                th.append($("<p>")
+                                  .text(data.description)
+                                )
+                                th.append($("<img>")
+                                  .attr("src",bundleid+'/screenshots/'+data.image)
+                                )
+                                $(element).append(th);
+                              });
+                            }
+        },
+      }// elements
+    }
+  ];
+
+  $( document ).ready(function() {
+    var writer = new JSONRenderer({
+      verbose : false,
+      contentDefinition : content,
+      onDataFileError : function(file) {
+        $('#packageInformation').hide();
+        $('#packageError').show();
+      }
+    });
+    writer.render();
+  }); // ready
+</script>
 </head>
 <body>
 <br />
 
 <div id="packageInformation">
-	<div class="container">
-		<h5>SCREENSHOTS</h5>
-		<ul id="screenshotsList" class="list-group">
-		</ul>
-	</div>
+  <div class="container">
+    <h5>SCREENSHOTS</h5>
+    <ul id="screenshotsList" class="list-group"></ul>
+  </div>
 </div>
 <div id="packageError" style="display:none">
-	<div class="container">
-	  <div class="alert alert-danger">
-		<strong>Oh snap!</strong> The package you are tying to view is not hosted on this repository. 
-	  </div>
-	</div>
+  <div class="container">
+    <div class="alert alert-warning">
+    There are no screenshots available for this package.
+    </div>
+  </div>
 </div>
-<!-- REPO FOOTER ----------------------------------------------------------- -->
-<script type="text/javascript">
-    var repoContents = 	{
-		"#repoFooterLinks" : 
-			{"type":"custom"
-				,"source":"repo>footerlinks>link"
-				,"render":function(element,source) {
-					$.each(source, function(index,data) {
-						var p = $("<li class='list-group-item'>");
-						var a = $("<a class='btn btn-link'>");
-						a.attr("href",$(data).find('url').text());
-						if ($(data).find('iconclass')) {
-							var i =  $("<span>")
-							i.attr("class",$(data).find('iconclass').text());
-							console.log(i);
-							$(a).append(i);
-						} 
-						$(a).append(' '+$(data).find('name').text());
-						$(p).append(a)
-						$(element).append(p);
-					}); //each
-				} //render
-			}
-	}
-    $( document ).ready(function() {
-        $.ajax({type: "GET", dataType: "xml",url : ("../repo.xml"),cache: false,
-            success : function(xml){
-				data_loader_engine(repoContents,xml);
-				if (navigator.userAgent.search(/Cydia/) != -1) {
-					$("a").each(function() {
-						console.log($(this).text());
-						$(this).attr("target","_blank");
-					});
-				}
-			},
-            error: function() {$("#contactInfo").hide()}
-        }); //ajax
-		
-		
-    }); // ready
-
-</script>
 
 <div id="contactInfo">
-	<div class="container">
-		<h5>CONTACT</h5>
-		<ul class="list-group" id="repoFooterLinks">
-		</ul>
-	</div>
+  <div class="container">
+    <h5>CONTACT</h5>
+    <ul class="list-group" id="repoFooterLinks">
+    </ul>
+  </div>
 </div>
-<!-- REPO FOOTER ENDS ------------------------------------------------------ -->
-
 </body>
 </html>
