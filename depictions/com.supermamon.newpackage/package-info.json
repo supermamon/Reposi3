@@ -4,7 +4,9 @@
   "author"        : "@supermamon",
   "compatibility" : {
     "firmware"    : {
-      "miniOS"    : "9.0"
+      "miniOS"    : "8.0",
+      "maxiOS"    : "9.0.2",
+      "otherVersions" : "unsupported"
     }
   },
   "dependencies"  : [

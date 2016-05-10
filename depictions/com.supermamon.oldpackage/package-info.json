@@ -4,7 +4,9 @@
   "author"        : "@supermamon",
   "compatibility" : {
     "firmware"    : {
-      "maxiOS"    : "7.0"
+      "miniOS"    : "6.0",
+      "maxiOS"    : "7.0",
+      "otherVersions" : "unsupported"
     }
   },
   "descriptions"  : [
