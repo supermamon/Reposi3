@@ -115,16 +115,21 @@
 						$('#externalLinksContainer').remove()
 					}
 
-					$.each(source, function(index,data){
-						var p = $("<li class='list-group-item'>");
-						$(p).append(
-							$("<a>")
-							.attr("href",$(data).find('url').text())
-							.text($(data).find('name').text())
-						);
-						$(element).append(p);
-					});
+                    $.each(source, function(index,data) {
+                        var a = $("<a class='link-item list-group-item'>");
+                        a.attr("href",$(data).find('url').text());
+                        if ($(data).find('iconclass')) {
+                            var i =  $("<span>")
+                            i.attr("class",$(data).find('iconclass').text());
+                            console.log(i);
+                            $(a).append(i);
+                        } 
+                        $(a).append($(data).find('name').text());
+                        $(element).append(a);
+                    }); //each
+
 				}
+
 			}
 	}
     $( document ).ready(function() {
