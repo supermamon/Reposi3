@@ -1,8 +1,49 @@
 /*
-I saw some parts of this code on the internet. I forgot where. If it's yours
-let me know and I'll credit you.
-
+most of the code here is writen by Timon Olsthoorn
+Follow him on -
+Github 	- https://github.com/tmnlsthrn
+Twitter - @TimonOlsthoorn
 */
+
+/* Lotus - iosver.js
+ * Copyright (C) 2014-2015  Timon Olsthoorn (tmnlsthrn)
+ */
+
+/*
+ *        Redistribution and use in source and binary
+ * forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the
+ *    above copyright notice, this list of conditions
+ *    and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the
+ *    above copyright notice, this list of conditions
+ *    and the following disclaimer in the documentation
+ *    and/or other materials provided with the
+ *    distribution.
+ * 3. The name of the author may not be used to endorse
+ *    or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS''
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+ * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+// Adapted from https://github.com/tmnlsthrn/Lotus/blob/master/js/iosver.js
+
 
 // changed const to var for IE9/10 compatibity.
 var VERSION_CHECK_SUPPORTED = "Your iOS version is supported! &#x1f60a;";
@@ -16,9 +57,9 @@ function ios_version_check(minIOS,maxIOS,otherIOS,callBack) {
 
 	function parseVersionString(version) {
 		var bits = version.split(".");
-		return [ 
-				parseInt(bits[0], 10), 
-				parseInt(bits[1] ? bits[1] : 0, 10), 
+		return [
+				parseInt(bits[0], 10),
+				parseInt(bits[1] ? bits[1] : 0, 10),
 				parseInt(bits[2] ? bits[2] : 0, 10)
 			   ];
 	}
@@ -51,9 +92,9 @@ function ios_version_check(minIOS,maxIOS,otherIOS,callBack) {
 		return 0;
 	}
 
-	var osVersion = [ 
-						parseInt(version[2], 10), 
-						parseInt(version[3], 10), 
+	var osVersion = [
+						parseInt(version[2], 10),
+						parseInt(version[3], 10),
 						parseInt(version[4] ? version[5] : 0, 10)
 					],
 
