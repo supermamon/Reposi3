@@ -90,6 +90,9 @@ This data are the links that appear at the bottom of every depication. The data 
 ```
 
 #### 3. Link the depiction page to your Packages file.
+
+Unzip by using `bunzip2 Packages.bz2`
+
 Your depiction like should look like this:
 ```text
 Depiction: https://username.github.io/repo/depictions/?p=[idhere]
@@ -99,7 +102,7 @@ Replace `[idhere]` with your actual package id.
 Depiction: https://username.github.io/repo/depictions/?p=com.supermamon.oldpackage
 ```
 #### 4. Almost there
-Compress your Packages file to bzip2 and there you have it! In case you haven't done yet, add your repo `https://username.github.io/repo/` to cydia. One final touch is to update `index.html`. Look at line 18 and 19. Change line 18 into your own **brand** and line 19 to have your own URL. Line2 27-44 contains the list of packages. You can edit those too.
+Compress your Packages file to bzip2 using `bzip2 Packages` and there you have it! In case you haven't done yet, add your repo `https://username.github.io/repo/` to cydia. One final touch is to update `index.html`. Look at line 18 and 19. Change line 18 into your own **brand** and line 19 to have your own URL. Line2 27-44 contains the list of packages. You can edit those too.
 ```html
 16 <div class="container">
 17 	<div class="well">
