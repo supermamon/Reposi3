@@ -11,7 +11,6 @@
   <script type="text/javascript" src="js/jquery.querystring.js"></script>
   <script type="text/javascript" src="js/data-loader-engine.js"></script>
   <script type="text/javascript" src="js/ios_version_check.js"></script>
-  <script type="text/javascript" src="js/touch.js"></script>
   <style>
 	@media (max-width: 767px) {
 		body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
@@ -123,7 +122,7 @@
                             i.attr("class",$(data).find('iconclass').text());
                             console.log(i);
                             $(a).append(i);
-                        } 
+                        }
                         $(a).append($(data).find('name').text());
                         $(element).append(a);
                     }); //each
@@ -213,7 +212,7 @@
    }
 
     var repoContents =  {
-        "#repoFooterLinks" : 
+        "#repoFooterLinks" :
             {"type":"custom"
                 ,"source":"repo>footerlinks>link"
                 ,"render":function(element,source) {
@@ -225,7 +224,7 @@
                             i.attr("class",$(data).find('iconclass').text());
                             console.log(i);
                             $(a).append(i);
-                        } 
+                        }
                         $(a).append($(data).find('name').text());
                         $(element).append(a);
                     }); //each
