@@ -10,6 +10,7 @@
 	<dependencies>
 		<package>mobilesubstrate</package>
 	</dependencies>
+	<shortDescription>This is a sample new package. Firmware should be greater than 7.0</shortDescription>
 	<descriptionlist>
 		<description>This is an package will full depictions.</description>
 		<description>It has more description lines.</description>
