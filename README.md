@@ -149,7 +149,7 @@ user:~/repo $ dpkg-scanpackages -m ./debs > Packages
 user:~/repo $ bzip2 Packages
 ```
 
-_Windows users, see [scanpkg](https://github.com/mstg/scanpkg)._
+_Windows users, see [dpkg-scanpackages-py](https://github.com/supermamon/dpkg-scanpackages-py) or [scanpkg](https://github.com/mstg/scanpkg)._
 
 #### 5. Cydia at last!
 
