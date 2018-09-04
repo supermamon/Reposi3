@@ -87,13 +87,13 @@
 			}
 		,"#changelogLink" :
             {"type":"custom"
-                ,"source" :"package>screenshots>screenshot"
+                ,"source" :"package>changelog>change"
                 ,"render":function(element, source){
                     $("#changelogLink").remove();
                     if ($(source).size() == 0) {
                         return
                     }
-                    // create screenshots link
+                    // create changelog link
                     $("#changesList").append(
                         $("<a class='link-item list-group-item'>")
                             .attr("href","changelog.html?p="+bundleid)
