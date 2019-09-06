@@ -1,16 +1,16 @@
 <package>
-	<id>com.supermamon.fullpackage</id>
-	<name>Full Package</name>
-	<version>2.0.0-1</version>
+	<id>com.justinpetkovic.youtubetools</id>
+	<name>YouTube Tools</name>
+	<version>3.0</version>
 	<compatibility>
 		<firmware>
 			<miniOS>7.0</miniOS>
 		</firmware>
 	</compatibility>
 	<dependencies>
-		<package>mobilesubstrate</package>
+		<package>org.coolstar.tweakinject, com.ex.libsubstitute, cy+cpu.arm64</package>
 	</dependencies>
-	<shortDescription>This is a sample new package. Firmware should be greater than 7.0</shortDescription>
+	<shortDescription>Essential toolbox for YouTube!</shortDescription>
 	<descriptionlist>
 		<description>This is an package will full depictions.</description>
 		<description>It has more description lines.</description>
