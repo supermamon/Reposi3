@@ -1,8 +1,7 @@
-com.nabzclan.criticalopschamshack_1.0.0_iphoneos-arm
 <package>
 	<id>com.nabzclan.criticalopschamshack</id>
 	<name>Critical Ops Chams</name>
-	<version>1.0.0-1</version>
+	<version>1.0.0</version>
 	<compatibility>
 		<firmware>
 			<miniOS>7.0</miniOS>
