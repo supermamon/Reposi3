@@ -35,12 +35,14 @@ Edit `Release` file. Modify the items pointed by `<--`
 
 **Branding**
 
-Open `index.html` and look at lines 18 and 19.
-Change line 18 into your own **brand** and line 19 to have your own URL.
-Line2 27-44 contains the list of featured packages.
-You can edit those too or remove them totally.
 
-Replace CydiaIcon.png.
+
+Edit `index.html`
+* Change the page title in the `<title>Reposi3</title>` tag
+* See lines 20 and 21.
+* Change line 20 into your own **brand** and line 21 to have your own URL.
+* Line2 30-51 contains the list of featured packages. You can edit those or remove them totally.
+* Replace CydiaIcon.png.
 
 
 **Page Footers**

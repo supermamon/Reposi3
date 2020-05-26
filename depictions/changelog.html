@@ -4,50 +4,33 @@
   <title>Changelog</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
- 
   <script type="text/javascript" src="js/jquery.querystring.js"></script>
   <script type="text/javascript" src="js/data-loader-engine.js"></script>
   <script type="text/javascript" src="js/ios_version_check.js"></script>
-  <style>
-	@media (max-width: 767px) {
-		body{background:#efeff4!important;margin:0;padding:0;border:0;outline:0;box-sizing:border-box}
-	}  
-  </style>
+   <script type="text/javascript" src="js/content-blocks-changelog.js"></script>
   <script type="text/javascript">
-  
-	bundleid = $.QueryString['p'];	
 
-    var contentBlocks = 	{
-        "#changeLogList" : 
-			{"type":"articles"  
-				,"source"			:"changelog"
-				,"titleSource" 		:"version"
-				,"paragraphSource"	:"change"
-				,"titleElement"	    : "<h5>"
-				,"paragraphContainer": "<ul class='list-group'>"
-				,"paragraphElement"	: "<li class='list-group-item'>"
+	bundleid = $.QueryString['p'];
 
+	var contentBlocks = getContentBlocks();
+
+  $( document ).ready(function() {
+		populateContentBlocks(
+			(bundleid+"/changelog.xml"),
+			contentBlocks,
+			() => {
+        $("#packageError").show();
+				$("#packageInformation").hide();				
+			},
+			(xml) => {
+				document.title = $(xml).find("package>name").text();
 			}
-	}
-    $( document ).ready(function() {
-        $.ajax({
-            type    : "GET",
-            dataType: "xml",
-            url     : (bundleid+"/changelog.xml"),
-            success : function(xml){
-            	data_loader_engine(contentBlocks,xml)
-            },
-			cache   : false,
-            error: function() {
-                $("#packageError").show();
-				$("#packageInformation").hide();
-            }
-        }); //ajax
-		
+		)
+
     }); // ready
   </script>
 </head>
